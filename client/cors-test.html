@@ -8,11 +8,15 @@
 </head>
 <body>
 <div id="responseText"></div>
-<button onclick="CorsTest.testGet(document.getElementById('responseText'))">Test</button>
+<button onclick="CorsTest.testGet(document.getElementById('responseText'))">Test Get</button>
+<button onclick="CorsTest.testPost(document.getElementById('responseText'))">Test Post</button>
+<button onclick="CorsTest.testPut(document.getElementById('responseText'))">Test Put</button>
+<button onclick="CorsTest.testPatch(document.getElementById('responseText'))">Test Patch</button>
+<button onclick="CorsTest.testDelete(document.getElementById('responseText'))">Test Delete</button>
 <script>
   CorsTest.config({
     serverUrl: 'http://localhost:8080/cors'
-  })
+  });
 </script>
 </body>
 </html>

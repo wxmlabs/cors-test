@@ -17,7 +17,7 @@
         xmlhttp.send();
     }
 
-    function ajaxPostJson(url, json, result) {
+    function ajaxPostJson(url, jsonObj, result) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && typeof result === 'function') {
                 result(xmlhttp);
@@ -25,10 +25,10 @@
         };
         xmlhttp.open("POST", url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify(json));
+        xmlhttp.send(JSON.stringify(jsonObj));
     }
 
-    function ajaxPutJson(url, json) {
+    function ajaxPutJson(url, jsonObj, result) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && typeof result === 'function') {
                 result(xmlhttp);
@@ -36,10 +36,10 @@
         };
         xmlhttp.open("PUT", url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify(json));
+        xmlhttp.send(JSON.stringify(jsonObj));
     }
 
-    function ajaxPatchJson(url, json, result) {
+    function ajaxPatchJson(url, jsonObj, result) {
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState === 4 && typeof result === 'function') {
                 result(xmlhttp);
@@ -47,7 +47,7 @@
         };
         xmlhttp.open("PATCH", url, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify(json));
+        xmlhttp.send(JSON.stringify(jsonObj));
     }
 
     function ajaxDelete(url, result) {

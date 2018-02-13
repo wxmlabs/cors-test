@@ -1,4 +1,4 @@
-import java.awt.*
+import org.apache.tools.ant.taskdefs.condition.Os
 
 group rootProject.group
 version rootProject.version
@@ -31,10 +31,10 @@ task explodedWar(type: Sync) {
 
 task shutdownTomcat() {
     if (exists(catlina_home) && serverListening('localhost', server_port)) {
-        exec {
-            workingDir catlina_home
-            commandLine "cmd", "/c", absolutePath("$catlina_home/bin/shutdown.bat")
-        }
+        ProcessBuilder pb = new ProcessBuilder(generateCommandLine("$catlina_home/bin/shutdown.bat"))
+        pb.directory(new File(catlina_home))
+        Process proc = pb.start()
+        proc.waitFor()
     }
 }
 shutdownTomcat.onlyIf { exists(catlina_home) && serverListening('localhost', server_port) }
@@ -49,20 +49,24 @@ copyToTomcat.onlyIf { exists(catlina_home) }
 
 task startupTomcat(dependsOn: copyToTomcat) {
     if (exists(catlina_home)) {
-        ProcessBuilder pb = new ProcessBuilder(["cmd", "/c", absolutePath("$catlina_home/bin/startup.bat")])
+        ProcessBuilder pb = new ProcessBuilder(generateCommandLine("$catlina_home/bin/startup.bat"))
         pb.directory(new File(catlina_home))
         Process proc = pb.start()
         proc.waitFor()
     }
+    if (serverListening('localhost', server_port)) {
+        println "CORS Test url is http://localhost:$server_port/$service_name"
+    }
 }
 startupTomcat.onlyIf { exists(catlina_home) }
 
-task runServer(dependsOn: startupTomcat) {
-    if (Desktop.isDesktopSupported() && serverListening('localhost', server_port)) {
-        Desktop.getDesktop().browse(new URI("http://localhost:$server_port/$service_name"))
+private static List<String> generateCommandLine(String commandLineString) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return ["cmd", "/c", absolutePath(commandLineString.replaceAll(/\.sh$/, '.bat'))]
+    } else {
+        return ["sh", absolutePath(commandLineString.replaceAll(/\.bat$/, '.sh'))]
     }
 }
-runServer.onlyIf { serverListening('localhost', server_port) }
 
 private static boolean exists(String fileOrDir) {
     return !fileOrDir.isEmpty() && new File(fileOrDir).exists()
