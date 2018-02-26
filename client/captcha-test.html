@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="js/ajax.js"></script>
+  <script src="js/cors_test.js"></script>
+</head>
+<body>
+<div id="responseText"></div>
+<button onclick="CorsTest.testPost(document.getElementById('responseText'))">Test Captcha</button>
+<script>
+  CorsTest.config({
+    serverUrl: 'http://175.102.18.231:8080/ehetong'
+  });
+</script>
+</body>
+</html>
