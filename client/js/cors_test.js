@@ -5,7 +5,7 @@
   function config(config) {
     if (typeof config === 'object') {
       CorsTestConfig.serverUrl = config.serverUrl;
-      testUrl = CorsTestConfig.serverUrl + "/test";
+      testUrl = CorsTestConfig.serverUrl + "/cors";
     }
   }
 

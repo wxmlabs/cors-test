@@ -14,7 +14,7 @@ import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "CorsTestServlet", urlPatterns = "/test")
+@WebServlet(name = "CorsTestServlet", urlPatterns = "/cors")
 public class CorsTestServlet extends GenericServlet {
 
     private void corsInterceptor(HttpServletRequest req, HttpServletResponse res) {
